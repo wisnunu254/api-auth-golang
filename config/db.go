@@ -27,7 +27,7 @@ func ConfigDB() *DB {
 func ConfigsDB() {
 	db.Host = os.Getenv("DB_HOST")
 	db.Port = os.Getenv("DB_PORT")
-	db.SslMode = os.Getenv("DB_SSLMODE")
+	db.SslMode = os.Getenv("DB_SSL_MODE")
 	db.Name = os.Getenv("DB_NAME")
 	db.User = os.Getenv("DB_USER")
 	db.Password = os.Getenv("DB_PASSWORD")

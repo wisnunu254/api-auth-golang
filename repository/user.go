@@ -1,7 +1,8 @@
 package repository
 
 import (
-	"log"
+	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/wisnunu254/api-auth-golang/app/auth/model"
@@ -25,20 +26,16 @@ func (repo *UsersRepository) ListUsersRepository() ([]*model.User, error) {
 
 func (repo *UsersRepository) GetEmailUsersRepository(email string) (*model.User, error) {
 	user := model.User{}
+	err := repo.db.DB.Get(&user, queries.SelectEmail, email)
 
-	// Assuming queries.SelectEmail is a constant string with a valid SQL SELECT statement
-	query := queries.SelectEmail
-
-	// If you are using placeholders, make sure to use them properly
-	// For example, if your query is "SELECT * FROM users WHERE email = $1", use:
-	// query := "SELECT * FROM users WHERE email = $1"
-	log.Printf("Executing query: %s\n", queries.SelectEmail)
-	err := repo.db.DB.Get(&user, query, email)
 	if err != nil {
-		log.Printf("Error executing query: %v\n", err)
+		if err == sql.ErrNoRows {
+			// Handle the case where no rows were found for the given email
+			return nil, fmt.Errorf("user not found with email %s", email)
+		}
+		// Handle other errors
 		return nil, err
 	}
-
 	return &user, nil
 }
 
@@ -48,8 +45,9 @@ func (repo *UsersRepository) GetIDUsersRepository(id string) (*model.User, error
 	return &user, err
 }
 
-func (repo *UsersRepository) InsertUsersRepository(user *model.User) error {
-	_, err := repo.db.DB.NamedExec(queries.InsertUsers, user)
+func (repo *UsersRepository) InsertUsersRepository(user *model.UserInsert) error {
+
+	_, err := repo.db.DB.Exec(queries.InsertUsers, user.Email, user.Password)
 	return err
 }
 

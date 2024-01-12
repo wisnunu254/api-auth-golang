@@ -5,7 +5,7 @@ import (
 )
 
 type (
-	Message map[string]string
+	Message map[string]interface{}
 
 	Response struct {
 		Status  int            `json:"status"`
@@ -26,8 +26,8 @@ type (
 var (
 	Text = http.StatusText
 
-	MsgSuccess = map[string]string{"en": "Success", "id": "Sukses"}
-	MsgFailed  = map[string]string{"en": "Failed", "id": "Gagal"}
+	MsgSuccess = map[string]interface{}{"status": true, "en": "Success", "id": "Sukses"}
+	MsgFailed  = map[string]interface{}{"status": false, "en": "Failed", "id": "Gagal"}
 )
 
 func ResponsSuccess(statusCode int, message Message, data interface{}) Response {

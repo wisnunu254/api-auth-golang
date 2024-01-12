@@ -6,7 +6,7 @@ type UsersRepositoryInterface interface {
 	ListUsersRepository() ([]*model.User, error)
 	GetEmailUsersRepository(email string) (*model.User, error)
 	GetIDUsersRepository(id string) (*model.User, error)
-	InsertUsersRepository(user *model.User) error
+	InsertUsersRepository(user *model.UserInsert) error
 	UpdateUsersRepository(user *model.User) error
 	DeleteUsersRepository(id string) error
 }

@@ -19,7 +19,11 @@ func ConfigsEnv(envFiles string) {
 
 func ConfigsFiber() fiber.Config {
 	return fiber.Config{
-		// Prefork: true,
+		// Prefork:       true,
+		// CaseSensitive: true,
+		// StrictRouting: true,
+		// ServerHeader:  "Fiber",
+		// AppName:       "Test App v1.0.1",
 		ReadTimeout: time.Second * time.Duration(ConfigApp().ReadTimeOut),
 	}
 }

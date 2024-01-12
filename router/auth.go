@@ -8,4 +8,5 @@ import (
 func AuthRouter(apiV1 *fiber.Group) {
 	route := apiV1.Group("/auth")
 	route.Post("/login", controller.AuthLogin)
+	route.Post("/register", controller.AuthRegister)
 }
